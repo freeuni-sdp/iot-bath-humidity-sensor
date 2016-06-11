@@ -1,0 +1,64 @@
+FORMAT: 1A
+HOST: http://freeuni-sdp-iot-bath-humidity-sensor.herokuapp.com/webapi
+
+# iot-bath-humidity-sensor
+
+iot-bath-humidity-sensor is a simple API allowing consumers to retrieve information about relative humidity in bathroom.
+All operations use humidity measurement data object. It has following attributes:
++ humidity - measurement of relative humidity in percents, expressed as floating point number
++ measurement_time - timestamp when last measurement was performed, expressed as string 
+
+## iot-bath-humidity-sensor API Root [/measurements/houses/house_id/rooms/room_id]
+
+### Retrieve Last Measurement [GET]
+Returns information about the last measurement
+
++ Response 200 (application/json)
+
+        [
+            {
+                "humidity": 50.12,
+                "measurement_time": "2016-06-11T14:25:43.122Z"
+            }
+        ]
+
+### List Recent Measurements [GET/num_measurements]
+Returns specific number of most recent measurements sorted in descending order in respect to time.
+If consumer requests more measurements than avaliable, a `409` status code is returned together with a JSON object specifying maximal query size.
+
++ Parameters 
+    + num_measurements (number) - number of recent measurements to return
+    
++ Response 200 (application/json)
+
+        [
+            {
+                "measurements": [
+                    {
+                        "humidity": 50.12,
+                        "measurement_time": "2016-06-11T14:25:43.122Z"
+                    },
+                    {
+                        "humidity": 54.16,
+                        "measurement_time": "2016-06-11T14:24:41.432Z"
+                    },
+                    {
+                        "humidity": 63.52,
+                        "measurement_time": "2016-06-11T14:23:41.223Z"
+                    }
+                ]
+            }
+        ]
+        
++ Response 409 (application/json)
+
+        [
+            {
+                "max_measurements" : 100
+            }
+        ]
+        
+## ping [/ping]
+Returns `OK` status code if server is alive
+### Ping [GET]
++ Response 200 (application/plain)
