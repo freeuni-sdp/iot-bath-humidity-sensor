@@ -1,0 +1,6 @@
+language: java
+
+deploy:
+   provider: heroku
+   api_key: ""
+   app: iot-bath-humidity-sensor
