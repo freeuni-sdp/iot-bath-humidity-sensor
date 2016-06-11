@@ -1,10 +1,10 @@
 <component name="ArtifactManager">
-  <artifact type="exploded-war" name="todo-core:war exploded">
-    <output-path>$PROJECT_DIR$/target/todo-core</output-path>
+  <artifact type="exploded-war" name="iot-bath-humidity-sensor:war exploded">
+    <output-path>$PROJECT_DIR$/target/iot-bath-humidity-sensor</output-path>
     <root id="root">
       <element id="directory" name="WEB-INF">
         <element id="directory" name="classes">
-          <element id="module-output" name="todo-core" />
+          <element id="module-output" name="iot-bath-humidity-sensor" />
         </element>
         <element id="directory" name="lib">
           <element id="library" level="project" name="Maven: com.microsoft.azure:azure-storage:4.2.0" />
@@ -41,9 +41,9 @@
         </element>
       </element>
       <element id="directory" name="META-INF">
-        <element id="file-copy" path="$PROJECT_DIR$/target/todo-core/META-INF/MANIFEST.MF" />
+        <element id="file-copy" path="$PROJECT_DIR$/target/iot-bath-humidity-sensor/META-INF/MANIFEST.MF" />
       </element>
-      <element id="javaee-facet-resources" facet="todo-core/web/Web" />
+      <element id="javaee-facet-resources" facet="iot-bath-humidity-sensor/web/Web" />
     </root>
   </artifact>
 </component>
