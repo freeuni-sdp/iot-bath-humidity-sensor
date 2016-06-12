@@ -8,7 +8,7 @@ All operations use humidity measurement data object. It has following attributes
 + humidity - measurement of relative humidity in percents, expressed as floating point number
 + measurement_time - timestamp when last measurement was performed, expressed as string 
 
-## iot-bath-humidity-sensor API Root [/measurements/houses/house_id/rooms/room_id]
+## iot-bath-humidity-sensor API Root [/measurements/houses/{house_id}/rooms/{room_id}]
 
 ### Retrieve Last Measurement [GET]
 Returns information about the last measurement
@@ -22,7 +22,7 @@ Returns information about the last measurement
             }
         ]
 
-### List Recent Measurements [GET/num_measurements]
+### List Recent Measurements [GET/measurements/houses/{house_id}/rooms/{room_id}/{num_measurements}]
 Returns specific number of most recent measurements sorted in descending order in respect to time.
 If consumer requests more measurements than avaliable, maximal number of measurements is returned.
 + Parameters 
