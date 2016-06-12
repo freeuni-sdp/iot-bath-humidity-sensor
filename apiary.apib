@@ -24,8 +24,7 @@ Returns information about the last measurement
 
 ### List Recent Measurements [GET/num_measurements]
 Returns specific number of most recent measurements sorted in descending order in respect to time.
-If consumer requests more measurements than avaliable, a `409` status code is returned together with a JSON object specifying maximal query size.
-
+If consumer requests more measurements than avaliable, maximal number of measurements is returned.
 + Parameters 
     + num_measurements (number) - number of recent measurements to return
     
@@ -33,6 +32,8 @@ If consumer requests more measurements than avaliable, a `409` status code is re
 
         [
             {
+                "num_returned" : 3,
+                
                 "measurements": [
                     {
                         "humidity": 50.12,
@@ -47,14 +48,6 @@ If consumer requests more measurements than avaliable, a `409` status code is re
                         "measurement_time": "2016-06-11T14:23:41.223Z"
                     }
                 ]
-            }
-        ]
-        
-+ Response 409 (application/json)
-
-        [
-            {
-                "max_measurements" : 100
             }
         ]
         
