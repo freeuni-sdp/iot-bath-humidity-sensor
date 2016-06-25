@@ -8,7 +8,7 @@ All operations use humidity measurement data object. It has following attributes
 + humidity - measurement of relative humidity in percents, expressed as floating point number
 + measurement_time - timestamp when last measurement was performed, expressed as string 
 
-## iot-bath-humidity-sensor API Root [/houses/{house_id}]
+## humidity measurements [/houses/{house_id}]
 
 ### Retrieve Last Measurement [GET]
 Returns information about the last measurement
@@ -50,6 +50,17 @@ If consumer requests more measurements than avaliable, maximal number of measure
                 ]
             }
         ]
+        
+### Report Last Measurement [POST/houses/{house_id}]
+Report the last humidity measurement result to sensor shadow. Used for simulation purposes.
+
++ Request (application/json)
+    
+        {
+            "measurement" : 56.12
+        }
+
++ Response 201 (application/plain)
         
 ## ping [/ping]
 Returns `200` status code if server is alive
