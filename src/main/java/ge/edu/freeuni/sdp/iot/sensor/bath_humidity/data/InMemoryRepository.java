@@ -18,6 +18,12 @@ public class InMemoryRepository implements Repository{
     public static InMemoryRepository instance() {
         if (instance==null) {
             instance = new InMemoryRepository(new HashMap<String, List<Humidity>>());
+
+            instance.addHouse("testHouse");
+            Humidity h = new Humidity();
+            h.setMeasurement_time("2016-06-26T17:51:29.517Z");
+            h.setHumidity(50.12);
+            instance.insert("testHouse", new Humidity());
         }
         return instance;
     }
