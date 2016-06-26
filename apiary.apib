@@ -28,24 +28,21 @@ If consumer requests more measurements than avaliable, maximal number of measure
     
 + Response 200 (application/json)
 
-        {
-            "num_returned" : 3,
-            
-            "measurements": [
-                {
-                    "humidity": 50.12,
-                    "measurement_time": "2016-06-11T14:25:43.122Z"
-                },
-                {
-                    "humidity": 54.16,
-                    "measurement_time": "2016-06-11T14:24:41.432Z"
-                },
-                {
-                    "humidity": 63.52,
-                    "measurement_time": "2016-06-11T14:23:41.223Z"
-                }
-            ]
-        }
+           
+        [
+            {
+                "humidity": 50.12,
+                "measurement_time": "2016-06-11T14:25:43.122Z"
+            },
+            {
+                "humidity": 54.16,
+                "measurement_time": "2016-06-11T14:24:41.432Z"
+            },
+            {
+                "humidity": 63.52,
+                "measurement_time": "2016-06-11T14:23:41.223Z"
+            }
+        ]
 
 ### Report Last Measurement [POST/houses/{house_id}]
 Report the last humidity measurement result to sensor shadow. Used for simulation purposes.
