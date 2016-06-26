@@ -18,7 +18,7 @@ import java.util.List;
  * Created by Giorgi on 25-Jun-16.
  */
 
-@Path("houses")
+@Path("/houses")
 @Consumes( { MediaType.APPLICATION_JSON})
 @Produces( { MediaType.APPLICATION_JSON})
 public class HumidityService {
@@ -48,10 +48,11 @@ public class HumidityService {
     }
 
     @GET
-    @Path("{house_id}")
+    @Path("/{house_id}")
     public Humidity getLastMeasurement(@PathParam("house_id") String houseId) {
-        if (!getHouseRegistry().hasHouse(houseId))
+        if (!getHouseRegistry().hasHouse(houseId)){
             return null;
+        }
         return getRepository().getLast(houseId);
     }
 

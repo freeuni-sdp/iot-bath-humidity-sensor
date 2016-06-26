@@ -8,9 +8,11 @@ public abstract class HouseRegistry {
     private HouseRegistry nextHouseRegistry = null;
 
     public boolean hasHouse(String houseId){
-        if (nextHouseRegistry == null)
-            return handleRequest(houseId);
-        return this.nextHouseRegistry.hasHouse(houseId);
+        boolean result = handleRequest(houseId);
+        if (!result && nextHouseRegistry != null) {
+            result = this.nextHouseRegistry.hasHouse(houseId);
+        }
+        return result;
     }
     public void setNext(HouseRegistry next){
         this.nextHouseRegistry = next;

@@ -13,7 +13,7 @@ public class ObjectFactory {
 
     public static HouseRegistry createHouseRegistry() {
         if (houseRegistry == null){
-            HouseRegistry houseRegistry = new LocalHouseRegistry(createRepository());
+            houseRegistry = new LocalHouseRegistry(createRepository());
             HouseRegistry nextHr = new OnlineHouseRegistry(createRepository());
             houseRegistry.setNext(nextHr);
         }
