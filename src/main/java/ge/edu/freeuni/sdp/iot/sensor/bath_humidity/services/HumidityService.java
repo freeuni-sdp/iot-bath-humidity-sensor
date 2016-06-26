@@ -1,7 +1,6 @@
 package ge.edu.freeuni.sdp.iot.sensor.bath_humidity.services;
 
 import ge.edu.freeuni.sdp.iot.sensor.bath_humidity.data.HouseRegistry;
-import ge.edu.freeuni.sdp.iot.sensor.bath_humidity.model.Humidities;
 import ge.edu.freeuni.sdp.iot.sensor.bath_humidity.model.Humidity;
 import ge.edu.freeuni.sdp.iot.sensor.bath_humidity.data.Repository;
 import ge.edu.freeuni.sdp.iot.sensor.bath_humidity.data.ObjectFactory;
@@ -33,18 +32,14 @@ public class HumidityService {
 
     @GET
     @Path("/{house_id}/num_measurements/{num_measurements}")
-    public Humidities getMeasurements(@PathParam("house_id") String houseId,
+    public List<Humidity> getMeasurements(@PathParam("house_id") String houseId,
                                       @PathParam("num_measurements") int numMeasurements) {
 
         //TODO returns null, a better solution is needed
         if (!getHouseRegistry().hasHouse(houseId))
             return null;
 
-        List<Humidity> humList = getRepository().getLastN(houseId, numMeasurements);
-        Humidities humidities = new Humidities();
-        humidities.setNum_returned(humList.size());
-        humidities.setMeasurements(humList);
-        return humidities;
+        return getRepository().getLastN(houseId, numMeasurements);
     }
 
     @GET
