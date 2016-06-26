@@ -8,22 +8,16 @@ import java.util.*;
  * Created by Giorgi on 25-Jun-16.
  */
 
-//TODO limit list size to some fixed number
 public class InMemoryRepository implements Repository{
 
     private static InMemoryRepository instance;
+    private static final int MAX_LIST_SIZE = 1000;
 
     private Map<String, List<Humidity>> measurements;
 
     public static InMemoryRepository instance() {
         if (instance==null) {
             instance = new InMemoryRepository(new HashMap<String, List<Humidity>>());
-
-            instance.addHouse("testHouse");
-            Humidity h = new Humidity();
-            h.setHumidity(50.12);
-            h.setMeasurement_time("2016-06-26T19:23:01.854Z");
-            instance.insert("testHouse", h);
         }
         return instance;
     }
@@ -34,7 +28,11 @@ public class InMemoryRepository implements Repository{
 
     @Override
     public void insert(String houseId, Humidity humidity) {
+        List currList = measurements.get(houseId);
         measurements.get(houseId).add(0, humidity);
+        if (currList.size() > MAX_LIST_SIZE){
+            currList.remove(MAX_LIST_SIZE);
+        }
     }
 
     @Override
