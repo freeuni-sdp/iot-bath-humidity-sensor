@@ -1,4 +1,4 @@
-import ge.edu.freeuni.sdp.iot.sensor.bath_humidity.core.PingService;
+import ge.edu.freeuni.sdp.iot.sensor.bath_humidity.services.PingService;
 import org.glassfish.jersey.server.ResourceConfig;
 import org.glassfish.jersey.test.JerseyTest;
 import org.junit.Test;

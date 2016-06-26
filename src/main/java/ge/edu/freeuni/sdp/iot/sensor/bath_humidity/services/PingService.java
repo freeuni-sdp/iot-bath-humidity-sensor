@@ -1,4 +1,4 @@
-package ge.edu.freeuni.sdp.iot.sensor.bath_humidity.core;
+package ge.edu.freeuni.sdp.iot.sensor.bath_humidity.services;
 
 
 import javax.ws.rs.*;
