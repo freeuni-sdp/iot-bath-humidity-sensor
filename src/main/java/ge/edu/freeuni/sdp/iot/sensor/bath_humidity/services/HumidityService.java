@@ -16,17 +16,12 @@ import java.util.*;
  * Created by Giorgi on 25-Jun-16.
  */
 
-//TODO return null-ebs gadavxedo unda!1
+//TODO return null should be changed
 
 @Path("/houses")
 @Consumes( { MediaType.APPLICATION_JSON})
 @Produces( { MediaType.APPLICATION_JSON})
 public class HumidityService {
-
-    private static final String LOCAL = "http://localhost:8080";
-    private static final String HEROKU = "http://iot-webui.herokuapp.com";
-
-    private Set<String> originSet = new HashSet<>(Arrays.asList(LOCAL, HEROKU));
 
     public Repository getRepository() {
         return ObjectFactory.createRepository();
@@ -39,49 +34,45 @@ public class HumidityService {
     @GET
     @Path("/{house_id}/num_measurements/{num_measurements}")
     public Response getMeasurements(@PathParam("house_id") String houseId,
-                                    @PathParam("num_measurements") int numMeasurements,
-                                    @HeaderParam("Origin") String origin) {
+                                    @PathParam("num_measurements") int numMeasurements) {
 
         if (!getHouseRegistry().hasHouse(houseId))
             return null;
 
-        return addHeaders(Response.ok().entity(getRepository().getLastN(houseId, numMeasurements)), origin);
+        return addHeaders(Response.ok().entity(getRepository().getLastN(houseId, numMeasurements)));
     }
 
     @GET
     @Path("/{house_id}")
-    public Response getLastMeasurement(@PathParam("house_id") String houseId, @HeaderParam("Origin") String origin) {
+    public Response getLastMeasurement(@PathParam("house_id") String houseId) {
         if (!getHouseRegistry().hasHouse(houseId)){
             return null;
         }
 
-        return addHeaders(Response.ok().entity(getRepository().getLast(houseId)), origin);
+        return addHeaders(Response.ok().entity(getRepository().getLast(houseId)));
     }
 
     @POST
     @Path("{house_id}")
-    public Response addMeasurement(@PathParam("house_id") String houseId, Humidity humidity, @HeaderParam("Origin") String origin) {
+    public Response addMeasurement(@PathParam("house_id") String houseId, Humidity humidity) {
         if (!getHouseRegistry().hasHouse(houseId))
             return null;
 
         humidity.setMeasurement_time(getCurrentDataTime());
         getRepository().insert(houseId, humidity);
-        return addHeaders(Response.ok(), origin);
+        return addHeaders(Response.ok());
     }
 
-    //TODO serialize directly Data object
     private String getCurrentDataTime(){
         DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
         Date date = new Date();
         return dateFormat.format(date);
     }
 
-    private Response addHeaders(Response.ResponseBuilder rpBuilder, String origin){
-        if (originSet.contains(origin)) {
-            rpBuilder.header("Access-Control-Allow-Origin", origin);
-            rpBuilder.header("Access-Control-Allow-Methods", "POST, GET, PUT, DELETE, OPTIONS");
-            rpBuilder.header("Access-Control-Allow-Headers", "Content-Type");
-        }
+    private Response addHeaders(Response.ResponseBuilder rpBuilder){
+        rpBuilder.header("Access-Control-Allow-Origin", "*");
+        rpBuilder.header("Access-Control-Allow-Methods", "POST, GET, PUT, DELETE, OPTIONS");
+        rpBuilder.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
         return rpBuilder.build();
     }
 }
