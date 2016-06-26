@@ -4,9 +4,6 @@ import ge.edu.freeuni.sdp.iot.sensor.bath_humidity.model.Humidity;
 
 import java.util.*;
 
-/**
- * Created by Giorgi on 25-Jun-16.
- */
 
 public class InMemoryRepository implements Repository{
 

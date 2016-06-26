@@ -3,9 +3,6 @@ package ge.edu.freeuni.sdp.iot.sensor.bath_humidity.model;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
-/**
- * Created by Giorgi on 25-Jun-16.
- */
 @XmlRootElement
 public class Humidity {
 
@@ -13,7 +10,7 @@ public class Humidity {
     private double humidity;
 
     @XmlElement
-    private String measurement_time;//TODO Data object would be better choice
+    private String measurement_time;
 
     public double getHumidity(){
         return humidity;

@@ -1,8 +1,5 @@
 package ge.edu.freeuni.sdp.iot.sensor.bath_humidity.data;
 
-/**
- * Created by Giorgi on 25-Jun-16.
- */
 public class ObjectFactory {
 
     protected static HouseRegistry houseRegistry;

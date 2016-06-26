@@ -4,9 +4,6 @@ import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-/**
- * Created by Giorgi on 26-Jun-16.
- */
 public class OnlineHouseRegistry extends HouseRegistry {
 
     private static final String ROOT_URI = "https://iot-house-registry.herokuapp.com/houses/";

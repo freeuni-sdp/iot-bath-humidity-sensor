@@ -12,12 +12,6 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
-/**
- * Created by Giorgi on 25-Jun-16.
- */
-
-//TODO return null should be changed
-
 @Path("/houses")
 @Consumes( { MediaType.APPLICATION_JSON})
 @Produces( { MediaType.APPLICATION_JSON})
