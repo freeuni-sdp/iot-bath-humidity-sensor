@@ -49,6 +49,7 @@ public class HumidityService {
     @POST
     @Path("{house_id}")
     public Response addMeasurement(@PathParam("house_id") String houseId, Humidity humidity) {
+
         if (!getHouseRegistry().hasHouse(houseId))
             return null;
 
