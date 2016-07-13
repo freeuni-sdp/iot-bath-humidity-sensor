@@ -6,7 +6,6 @@ import org.glassfish.jersey.test.JerseyTest;
 import org.junit.Before;
 import org.junit.Test;
 
-import javax.ws.rs.client.Entity;
 import javax.ws.rs.core.Application;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
@@ -18,7 +17,9 @@ import static org.mockito.Mockito.spy;
 
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-import org.omg.CORBA.Object;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import static org.mockito.Mockito.*;
 
@@ -48,7 +49,7 @@ public class HumidityServiceTest extends JerseyTest{
         TestFactory.setRepository(repository);
 
         humidity = new Humidity();
-        humidity.setHumidity(05.15);
+        humidity.setHumidity(50.15);
     }
 
     @Test
@@ -69,32 +70,41 @@ public class HumidityServiceTest extends JerseyTest{
     }
 
     @Test
-    public void getLastMeasurement_HouseIdExistsButNoMeasurement_Return200ErrorCodeWithNoJSON(){
+    public void getLastMeasurement_GetLastMeasurement_Return200ErrorCodeWithHumidity(){
 
-        when(houseRegistry.hasHouse("no_measurement")).thenReturn(true);
-        when(repository.getLast("no_measurement")).thenReturn(null);
-        Response response = target("houses/no_measurement").request(MediaType.APPLICATION_JSON).get();
+        when(houseRegistry.hasHouse("with_measurement")).thenReturn(true);
+        when(repository.getLast("with_measurement")).thenReturn(humidity);
+        Response response = target("houses/with_measurement").request(MediaType.APPLICATION_JSON).get();
         assertEquals(response.getStatus(), Response.Status.OK.getStatusCode());
-        assertNull(response.readEntity(Humidity.class));
+        Humidity h = response.readEntity(Humidity.class);
+        assertTrue(Math.abs(h.getHumidity() - humidity.getHumidity()) < 0.001);
     }
 
-//    @Test
-//    public void testAddMeasurement(){
-//        Humidity newHumidity = new Humidity();
-//        newHumidity.setHumidity(75.108);
-//        Entity<Humidity> humEntity = Entity.entity(newHumidity, MediaType.APPLICATION_JSON);
-//
-//        Response response = target("houses/testHouse").request(MediaType.APPLICATION_JSON).header("Origin", "http://localhost:8080")
-//                .post(humEntity,
-//                Response.class);
-//
-//        assertEquals(response.getStatus(), Response.Status.OK.getStatusCode());
-//
-//        response = target("houses/testHouse/num_measurements/2").request(MediaType.APPLICATION_JSON).get();
-//        assertEquals(response.getStatus(), Response.Status.OK.getStatusCode());
-////        System.out.println(response.getStatus());
-//        System.out.println(response.readEntity(String.class));
-//
-//    }
 
+    @Test
+    public void getMeasurements_Request2Measurements_Return200ErrorCodeWith2Measurements(){
+
+        List humidities = new ArrayList();
+        humidities.add(humidity);
+        humidities.add(new Humidity());
+
+        when(houseRegistry.hasHouse("2_measurements")).thenReturn(true);
+        when(repository.getLastN("2_measurements", 2)).thenReturn(humidities);
+        Response response = target("houses/2_measurements/num_measurements/2").request(MediaType.APPLICATION_JSON).get();
+        assertEquals(response.getStatus(), Response.Status.OK.getStatusCode());
+
+        List<Humidity> list = response.readEntity(new ArrayList<Humidity>().getClass());
+        assertEquals(2, list.size());
+    }
+
+
+    @Test
+    public void addMeasurement_CheckIfHeadersAreSet_Returns200ErrorCode() {
+        when(houseRegistry.hasHouse("headers")).thenReturn(true);
+        Response response = target("houses/headers").request(MediaType.APPLICATION_JSON).get();
+        assertEquals(response.getHeaderString("Access-Control-Allow-Origin"), "*");
+        assertEquals(response.getHeaderString("Access-Control-Allow-Methods"), "POST, GET, PUT, DELETE, OPTIONS");
+        assertEquals(response.getHeaderString("Access-Control-Allow-Headers"), "Origin, X-Requested-With, Content-Type, Accept");
+        assertEquals(response.getStatus(), Response.Status.OK.getStatusCode());
+    }
 }
