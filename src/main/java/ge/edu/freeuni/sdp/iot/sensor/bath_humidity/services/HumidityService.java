@@ -39,9 +39,9 @@ public class HumidityService {
     @GET
     @Path("/{house_id}")
     public Response getLastMeasurement(@PathParam("house_id") String houseId) {
-        if (!getHouseRegistry().hasHouse(houseId)){
+
+        if (!getHouseRegistry().hasHouse(houseId))
             return null;
-        }
 
         return addHeaders(Response.ok().entity(getRepository().getLast(houseId)));
     }

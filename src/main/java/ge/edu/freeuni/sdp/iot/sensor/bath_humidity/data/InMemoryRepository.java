@@ -15,6 +15,7 @@ public class InMemoryRepository implements Repository{
     public static InMemoryRepository instance() {
         if (instance==null) {
             instance = new InMemoryRepository(new HashMap<String, List<Humidity>>());
+            instance.addHouse("testHouse");
         }
         return instance;
     }
@@ -34,7 +35,10 @@ public class InMemoryRepository implements Repository{
 
     @Override
     public Humidity getLast(String houseId) {
-        return measurements.get(houseId).get(0);
+        if (!measurements.get(houseId).isEmpty())
+            return measurements.get(houseId).get(0);
+        else
+            return null;
     }
 
     @Override
